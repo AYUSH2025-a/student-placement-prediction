@@ -106,20 +106,37 @@ The primary data source is the **Campus Placement Prediction Dataset** (Kaggle).
 
 ## 📅 Development Timeline & Weekly Milestones
 
-### Week 1 – Project Formulation & Architecture
-* Defined project domain, scope, target objectives, and business utility.
-* Conducted initial data schema verification and technology stack initialization.
+* ✔️ **Week 1: Data Acquisition & Exploratory Data Analysis (EDA)**
+  * Collected and cleaned raw placement dataset.
+  * Performed initial Exploratory Data Analysis (EDA) to check distributions, missing values, and feature correlations.
+  * Identified key predictors including CGPA, aptitude scores, and internship experience.
 
-### Week 2 – Exploratory Data Analysis & Feature Engineering
-* Handled missing value checks, verified data types, and isolated non-predictive variables (`Salary`).
-* Plotted target balance, academic distributions (CGPA/Degree %), and feature correlation heatmaps.
-* Constructed preprocessing specifications for numerical standardization and nominal encoding.
+* ✔️ **Week 2: Data Preprocessing & Feature Engineering**
+  * Handled missing values and outlier detection across continuous numerical variables.
+  * Formatted categorical features (`ExtracurricularActivities`, `PlacementTraining`) for encoding.
+  * Applied feature scaling (`StandardScaler`) to standardize input variables for linear models.
 
-### Week 3 – Initial Model Implementation & Baseline Evaluation
-* Built scikit-learn preprocessing `Pipeline` using `ColumnTransformer`.
-* Executed 80/20 Stratified Train-Test split (`random_state=42`).
-* Trained Logistic Regression and Dummy Classifier models.
-* Audited model performance using 5-Fold Stratified Cross-Validation and Confusion Matrices.
+* ✔️ **Week 3: Baseline Model Implementation**
+  * Built initial baseline model using Logistic Regression.
+  * Established a performance benchmark of ~80.85% accuracy on raw feature splits.
+  * Validated data split logic and setup reproducible random state seeds (`random_state=42`).
+
+* ✔️ **Week 4: Advanced Model Building & Evaluation Pipeline**
+  * Implemented scikit-learn `ColumnTransformer` pipeline integrating `StandardScaler` and `OneHotEncoder(drop='first')`.
+  * Defined explicit feature matrix (`X`) and target vector (`y`) using `PlacementStatus`.
+  * Implemented stratified 80/20 train-test split (`train_test_split`).
+  * Evaluated performance metrics using Confusion Matrix and Classification Report (Precision, Recall, F1-Score).
+  * Cleaned up pipeline bugs, standardizing variable execution order and handling missing feature column mapping.
+
+* ❌ **Week 5: Hyperparameter Tuning & Model Comparison**
+  * Train alternative classifiers (e.g., Random Forest, XGBoost, Decision Trees).
+  * Perform hyperparameter tuning using `GridSearchCV` / `RandomizedSearchCV`.
+  * Compare cross-validation scores across models to select final predictor.
+
+* ❌ **Week 6: Deployment & Final Documentation**
+  * Export trained model and preprocessing pipeline using `joblib` / `pickle`.
+  * Build web interface/API endpoint for real-time placement status predictions.
+  * Finalize repository documentation and project report.
 
 ---
 
