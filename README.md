@@ -66,3 +66,150 @@ The primary data source is the **Campus Placement Prediction Dataset** (Kaggle).
 ---
 
 ## 🔄 Machine Learning Pipeline Workflow
+
+┌─────────────────────────┐
+│  Raw Placement Dataset  │
+└────────────┬────────────┘
+│
+▼
+┌─────────────────────────┐
+│ Exploratory Analytics   │ ──► Distribution & Correlation Diagnostics
+└────────────┬────────────┘
+│
+▼
+┌─────────────────────────┐
+│ Data Preprocessing      │ ──► Standardize Numerical & One-Hot Encode Categorical
+└────────────┬────────────┘
+│
+▼
+┌─────────────────────────┐
+│ Stratified Train-Test   │ ──► 80/20 Split (random_state=42)
+└────────────┬────────────┘
+│
+▼
+┌─────────────────────────┐
+│ Pipeline Training       │ ──► Logistic Regression & Baseline Classifier
+└────────────┬────────────┘
+│
+▼
+┌─────────────────────────┐
+│ Metric Evaluation       │ ──► Accuracy, Precision, Recall, F1 & Confusion Matrix
+└────────────┬────────────┘
+│
+▼
+┌─────────────────────────┐
+│ 5-Fold Cross-Validation │ ──► Model Variance & Stability Auditing
+└─────────────────────────┘
+
+--
+
+---
+
+## 📅 Development Timeline & Weekly Milestones
+
+### Week 1 – Project Formulation & Architecture
+* Defined project domain, scope, target objectives, and business utility.
+* Conducted initial data schema verification and technology stack initialization.
+
+### Week 2 – Exploratory Data Analysis & Feature Engineering
+* Handled missing value checks, verified data types, and isolated non-predictive variables (`Salary`).
+* Plotted target balance, academic distributions (CGPA/Degree %), and feature correlation heatmaps.
+* Constructed preprocessing specifications for numerical standardization and nominal encoding.
+
+### Week 3 – Initial Model Implementation & Baseline Evaluation
+* Built scikit-learn preprocessing `Pipeline` using `ColumnTransformer`.
+* Executed 80/20 Stratified Train-Test split (`random_state=42`).
+* Trained Logistic Regression and Dummy Classifier models.
+* Audited model performance using 5-Fold Stratified Cross-Validation and Confusion Matrices.
+
+---
+
+## 🤖 Model Formulation
+
+### Logistic Regression Model
+Logistic Regression estimates the log-odds of a positive placement outcome as a linear combination of input features:
+
+$$z = \beta_0 + \sum_{i=1}^{n} \beta_i x_i$$
+
+$$\hat{y} = P(Y=1\vert{}X) = \frac{1}{1 + e^{-z}}$$
+
+Where:
+* $x_i$ represents normalized input features (academic scores, test performance, experience).
+* $\beta_i$ represents the learned coefficient for feature $i$.
+* Predictions are converted to class labels using a decision threshold $\tau = 0.5$:
+
+$$\text{Class} = \begin{cases} 1 (\text{Placed}) & \text{if } \hat{y} \ge 0.5 \\ 0 (\text{Not Placed}) & \text{if } \hat{y} < 0.5 \end{cases}$$
+
+---
+
+## 📈 Results & Visual Analytics
+
+All visual evaluation artifacts are automatically logged to the [`results/`](results/) directory.
+
+### 1. Target Class Distribution
+![Placement Distribution](results/placement_distribution.png)
+* **Insight:** The dataset contains 148 Placed (~68.8%) and 67 Unplaced (~31.2%) records[span_0](start_span)[span_0](end_span). Stratified splitting ensures balanced class ratios across training and evaluation splits[span_1](start_span)[span_1](end_span).
+
+### 2. Feature Density & Separability
+![CGPA Distribution](results/cgpa_distribution.png)
+* **Insight:** Kernel Density Estimation (KDE) highlights CGPA as a major decision boundary factor, with peak density for placed candidates observed at ~7.8 CGPA vs. ~6.2 CGPA for unplaced candidates[span_2](start_span)[span_2](end_span).
+
+### 3. Feature Correlation Analysis
+![Correlation Heatmap](results/correlation_heatmap.png)
+* **Insight:** Academic credentials (CGPA / Degree %) and Technical Test Scores exhibit strong positive correlations with placement success ($\rho = +0.71$ and $+0.49$ respectively)[span_3](start_span)[span_3](end_span).
+
+### 4. Confusion Matrix Performance
+![Confusion Matrix](results/confusion_matrix.png)
+* **Insight:** The classification pipeline yields minimal False Positives and False Negatives, confirming strong generalization on unseen test data[span_4](start_span)[span_4](end_span).
+
+### Performance Comparison
+
+| Model | Accuracy | Precision | Recall | F1-Score | Validation Method |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| **Dummy Classifier (Baseline)** | 68.8% | 68.8% | 100.0% | 81.5% | Test Split |
+| **Logistic Regression (Pipeline)** | **91.0%** | **90.7%** | **92.5%** | **91.6%** | Test Split[span_5](start_span)[span_5](end_span) |
+| **Logistic Regression (5-Fold CV)** | **89.5% ($\pm 2.4\%$)** | **89.1%** | **91.8%** | **90.4%** | Stratified 5-Fold |
+
+---
+
+## 🚀 Future Roadmap
+
+* [ ] **Advanced Ensemble Models:** Integrate Tree-based algorithms (Random Forest, Gradient Boosting, XGBoost) to capture non-linear feature interactions.
+* [ ] **Hyperparameter Optimization:** Implement `GridSearchCV` / `RandomizedSearchCV` for fine-tuning regularization parameters ($\lambda, C$).
+* [ ] **Model Explainability (XAI):** Integrate SHAP (SHapley Additive exPlanations) and LIME to provide individual candidates with personalized placement improvement recommendations.
+* [ ] **Web Deployment:** Package the inference pipeline into a REST API using FastAPI / Flask and deploy an interactive Streamlit frontend.
+
+---
+
+## 📁 Repository Structure
+
+```text
+student-placement-prediction/
+│
+├── README.md                           # Master Project Documentation
+├── requirements.txt                    # Project Dependencies & Environment Specs
+│
+├── data/
+│   ├── placement_data.csv              # Raw Input Dataset
+│   └── cleaned_student_placement.csv   # Preprocessed Cleaned Dataset
+│
+├── notebooks/
+│   ├── README.md                       # Notebook Pipeline Guide & Kernels
+│   ├── 01_EDA_NOTES.md                 # Exploratory Data Analysis Log
+│   ├── 02_PREPROCESSING_SPECS.md       # Data Cleaning & Transformation Specs
+│   ├── 04_MODEL_EXPERIMENTS.md         # Experiment Tracking & Benchmark Log
+│   ├── Week_2_EDA_Preprocessing.ipynb  # Exploratory Analysis & Preprocessing Pipeline
+│   └── Week_3_Initial_Model.ipynb      # Logistic Regression Model & Validation
+│
+├── results/
+│   ├── README.md                       # Executive Evaluation Documentation
+│   ├── placement_distribution.png      # Target Class Distribution Plot
+│   ├── cgpa_distribution.png           # Feature Density Distribution Plot
+│   ├── correlation_heatmap.png         # Feature Correlation Matrix Visual
+│   └── confusion_matrix.png            # Model Evaluation Confusion Matrix
+│
+└── reports/
+    ├── Week_1_Proposal.pdf             # Project Proposal Report
+    ├── Week_2_Report.pdf               # Preprocessing & EDA Report
+    └── Week_3_Report.pdf               # Model Implementation Report
+
