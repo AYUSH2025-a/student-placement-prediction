@@ -148,26 +148,26 @@ All visual evaluation artifacts are automatically logged to the [`results/`](res
 
 ### 1. Target Class Distribution
 ![Placement Distribution](results/placement_distribution.png)
-* **Insight:** The dataset contains 148 Placed (~68.8%) and 67 Unplaced (~31.2%) records[span_0](start_span)[span_0](end_span). Stratified splitting ensures balanced class ratios across training and evaluation splits[span_1](start_span)[span_1](end_span).
+* **Insight:** The dataset contains 148 Placed (~68.8%) and 67 Unplaced (~31.2%) records. Stratified splitting ensures balanced class ratios across training and evaluation splits.
 
 ### 2. Feature Density & Separability
 ![CGPA Distribution](results/cgpa_distribution.png)
-* **Insight:** Kernel Density Estimation (KDE) highlights CGPA as a major decision boundary factor, with peak density for placed candidates observed at ~7.8 CGPA vs. ~6.2 CGPA for unplaced candidates[span_2](start_span)[span_2](end_span).
+* **Insight:** Kernel Density Estimation (KDE) highlights CGPA as a major decision boundary factor, with peak density for placed candidates observed at ~7.8 CGPA vs. ~6.2 CGPA for unplaced candidates.
 
 ### 3. Feature Correlation Analysis
 ![Correlation Heatmap](results/correlation_heatmap.png)
-* **Insight:** Academic credentials (CGPA / Degree %) and Technical Test Scores exhibit strong positive correlations with placement success ($\rho = +0.71$ and $+0.49$ respectively)[span_3](start_span)[span_3](end_span).
+* **Insight:** Academic credentials (CGPA / Degree %) and Technical Test Scores exhibit strong positive correlations with placement success ($\rho = +0.71$ and $+0.49$ respectively).
 
 ### 4. Confusion Matrix Performance
 ![Confusion Matrix](results/confusion_matrix.png)
-* **Insight:** The classification pipeline yields minimal False Positives and False Negatives, confirming strong generalization on unseen test data[span_4](start_span)[span_4](end_span).
+* **Insight:** The classification pipeline yields minimal False Positives and False Negatives, confirming strong generalization on unseen test data.
 
 ### Performance Comparison
 
 | Model | Accuracy | Precision | Recall | F1-Score | Validation Method |
 | :--- | :---: | :---: | :---: | :---: | :--- |
 | **Dummy Classifier (Baseline)** | 68.8% | 68.8% | 100.0% | 81.5% | Test Split |
-| **Logistic Regression (Pipeline)** | **91.0%** | **90.7%** | **92.5%** | **91.6%** | Test Split[span_5](start_span)[span_5](end_span) |
+| **Logistic Regression (Pipeline)** | **91.0%** | **90.7%** | **92.5%** | **91.6%** | Test Split |
 | **Logistic Regression (5-Fold CV)** | **89.5% ($\pm 2.4\%$)** | **89.1%** | **91.8%** | **90.4%** | Stratified 5-Fold |
 
 ---
