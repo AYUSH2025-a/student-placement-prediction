@@ -67,42 +67,41 @@ The primary data source is the **Campus Placement Prediction Dataset** (Kaggle).
 
 ## 🔄 Machine Learning Pipeline Workflow
 
+```text
 ┌─────────────────────────┐
 │  Raw Placement Dataset  │
 └────────────┬────────────┘
-│
-▼
+             │
+             ▼
 ┌─────────────────────────┐
 │ Exploratory Analytics   │ ──► Distribution & Correlation Diagnostics
 └────────────┬────────────┘
-│
-▼
+             │
+             ▼
 ┌─────────────────────────┐
 │ Data Preprocessing      │ ──► Standardize Numerical & One-Hot Encode Categorical
 └────────────┬────────────┘
-│
-▼
+             │
+             ▼
 ┌─────────────────────────┐
 │ Stratified Train-Test   │ ──► 80/20 Split (random_state=42)
 └────────────┬────────────┘
-│
-▼
+             │
+             ▼
 ┌─────────────────────────┐
 │ Pipeline Training       │ ──► Logistic Regression & Baseline Classifier
 └────────────┬────────────┘
-│
-▼
+             │
+             ▼
 ┌─────────────────────────┐
 │ Metric Evaluation       │ ──► Accuracy, Precision, Recall, F1 & Confusion Matrix
 └────────────┬────────────┘
-│
-▼
+             │
+             ▼
 ┌─────────────────────────┐
 │ 5-Fold Cross-Validation │ ──► Model Variance & Stability Auditing
 └─────────────────────────┘
-
---
-
+```
 ---
 
 ## 📅 Development Timeline & Weekly Milestones
